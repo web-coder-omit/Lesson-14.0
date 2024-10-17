@@ -16,7 +16,7 @@ function plugin_file_function(){
 }
 add_action( 'tgmpa_register', 'mb_fw_fun_register_required_plugins' );
 function clm_post_function($colums){
-    print_r($colums);
+   // print_r($colums);
     unset($colums['tags']);
     unset($colums['comments']);
     unset($colums['author']);
@@ -59,7 +59,7 @@ function coldemo_set_word_count(){
         'post_type'=>'post',
            'post_status' => 'any'
     ));
-    foreach($post as $p){
+    foreach($posts as $p){
         $content = $p->post_content;
         $wordn = str_word_count(strip_tags($content));
         update_post_meta($p->ID,'wordn',$wordn);
@@ -101,19 +101,19 @@ function cm_filter(){
     ?>
         <select name="demofilter">
             <option value="0">Select status</option>
-            <option value="0">Some Posts</option>
-            <option value="0">Select posts++</option>
+            <option value="1">Some Posts</option>
+            <option value="2">Select posts++</option>
         </select>
     <?php
 }
 add_action('restrict_manage_posts','cm_filter');
-function filter_data(){
+function filter_data($wpquery){
     if(!is_admin()){
         return;
     }
     $filter_value = isset($_GET['demofilter']) ? $_GET['demofilter'] : '';
     if('1' == $filter_value){
-        $wpquery->set('post__in',array(19));
+        $wpquery->set('post__in',array(12,6));
     }
 }
 add_action('pre_get_posts','filter_data');
